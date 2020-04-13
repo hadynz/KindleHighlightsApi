@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebApi.Repositories;
+using WebApi.Services;
 
 namespace WebApi
 {
@@ -21,6 +23,8 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BookContext>(opt => opt.UseInMemoryDatabase("Books"));
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IBookService, BookService>();
             services.AddControllers();
         }
 
