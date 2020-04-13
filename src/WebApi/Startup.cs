@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebApi.Mapper;
 
 namespace WebApi
 {
@@ -25,6 +26,7 @@ namespace WebApi
             services.AddDbContext<BookContext>(opt => opt.UseInMemoryDatabase("Books"));
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IBookMapper, BookMapper>();
             services.AddControllers();
         }
 

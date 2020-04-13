@@ -25,9 +25,11 @@ namespace ApplicationCore.Services
             return await _repository.FindBookByIdAsync(bookId);
         }
 
-        public async Task CreateBookAsync(Book book)
+        public async Task<Book> CreateBookAsync(BookCreateCommand createCommand)
         {
+            var book = new Book(createCommand);
             await _repository.CreateBookAsync(book);
+            return book;
         }
 
         public bool BookExists(Guid bookId)

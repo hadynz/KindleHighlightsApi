@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ApplicationCore.Models;
 using ApplicationCore.Services;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Mapper;
 
 namespace WebApi.Controllers
 {
@@ -13,23 +14,25 @@ namespace WebApi.Controllers
     public class BooksController : ControllerBase
     {
         private readonly IBookService _bookService;
+        private readonly IBookMapper _bookMapper;
 
-        public BooksController(IBookService bookService)
+        public BooksController(IBookService bookService, IBookMapper bookMapper)
         {
             _bookService = bookService;
+            _bookMapper = bookMapper;
         }
 
         // GET: api/Books
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
+        public async Task<ActionResult<IEnumerable<BookDto>>> GetBooks()
         {
             var books = await _bookService.GetAllBooksAsync();
-            return books.ToList();
+            return books.Select(b => _bookMapper.Map(b)).ToList();
         }
 
         // GET: api/Books/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Book>> GetBook(Guid id)
+        public async Task<ActionResult<BookDto>> GetBook(Guid id)
         {
             var book = await _bookService.FindBookByIdAsync(id);
 
@@ -38,14 +41,15 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
-            return book;
+            return _bookMapper.Map(book);
         }
 
         // POST: api/Books
         [HttpPost]
-        public async Task<ActionResult<Book>> PostBook(Book book)
+        public async Task<ActionResult<BookPostResponseDto>> PostBook(BookPostRequestDto bookPost)
         {
-            await _bookService.CreateBookAsync(book);
+            var bookCreateCommand = _bookMapper.Map(bookPost);
+            var book = await _bookService.CreateBookAsync(bookCreateCommand);
             return CreatedAtAction("GetBook", new { id = book.BookId }, book);
         }
 
