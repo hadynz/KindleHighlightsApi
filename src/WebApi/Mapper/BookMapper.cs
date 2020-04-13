@@ -30,5 +30,12 @@ namespace WebApi.Mapper
                 UpdatedAt = book.CreatedAtUtc
             };
         }
+        public BookPostResponseDto MapToBookPostResponse(Book book)
+        {
+            return new BookPostResponseDto
+            {
+                BookId = book.BookId
+            };
+        }
     }
 }

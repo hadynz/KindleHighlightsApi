@@ -6,5 +6,6 @@ namespace WebApi.Mapper
     {
         BookCreateCommand Map(BookPostRequestDto bookDto);
         BookDto Map(Book book);
+        BookPostResponseDto MapToBookPostResponse(Book book);
     }
 }

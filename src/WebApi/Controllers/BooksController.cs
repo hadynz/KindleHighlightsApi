@@ -50,7 +50,9 @@ namespace WebApi.Controllers
         {
             var bookCreateCommand = _bookMapper.Map(bookPost);
             var book = await _bookService.CreateBookAsync(bookCreateCommand);
-            return CreatedAtAction("GetBook", new { id = book.BookId }, book);
+            
+            var response = _bookMapper.MapToBookPostResponse(book);
+            return CreatedAtAction("GetBook", new { id = book.BookId }, response);
         }
 
         private bool BookExists(Guid id)
