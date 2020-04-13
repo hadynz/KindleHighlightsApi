@@ -1,7 +1,7 @@
-using WebApi.Models;
+using ApplicationCore.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApi.DBContext
+namespace ApplicationCore.DBContext
 {
     public class BookContext : DbContext
     {

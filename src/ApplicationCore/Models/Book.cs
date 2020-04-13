@@ -1,6 +1,6 @@
 using System;
 
-namespace WebApi.Models
+namespace ApplicationCore.Models
 {
     public class Book
     {

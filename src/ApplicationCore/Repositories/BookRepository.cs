@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationCore.DBContext;
+using ApplicationCore.Models;
 using Microsoft.EntityFrameworkCore;
-using WebApi.DBContext;
-using WebApi.Models;
 
-namespace WebApi.Repositories
+namespace ApplicationCore.Repositories
 {
     public class BookRepository : IBookRepository
     {

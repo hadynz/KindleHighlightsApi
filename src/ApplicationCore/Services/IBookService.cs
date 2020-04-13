@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebApi.Models;
+using ApplicationCore.Models;
 
-namespace WebApi.Repositories
+namespace ApplicationCore.Services
 {
-    public interface IBookRepository
+    public interface IBookService
     {
         Task<IEnumerable<Book>> GetAllBooksAsync();
         Task<Book> FindBookByIdAsync(Guid bookId);

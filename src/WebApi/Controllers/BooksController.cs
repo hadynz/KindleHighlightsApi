@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationCore.Models;
+using ApplicationCore.Services;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Models;
-using WebApi.DBContext;
-using WebApi.Services;
 
 namespace WebApi.Controllers
 {
