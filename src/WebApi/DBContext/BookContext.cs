@@ -1,7 +1,7 @@
-using KindleHighlightsApi.Models;
+using WebApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace KindleHighlightsApi.DBContext
+namespace WebApi.DBContext
 {
     public class BookContext : DbContext
     {

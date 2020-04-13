@@ -1,6 +1,6 @@
 using System;
 
-namespace KindleHighlightsApi.Models
+namespace WebApi.Models
 {
     public class Book
     {

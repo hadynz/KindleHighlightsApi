@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using KindleHighlightsApi.Models;
-using KindleHighlightsApi.DBContext;
+using WebApi.Models;
+using WebApi.DBContext;
 
-namespace KindleHighlightsApi.Controllers
+namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
