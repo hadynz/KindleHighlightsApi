@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApplicationCore.Models;
@@ -17,7 +18,8 @@ namespace ApplicationCore.Services
 
         public async Task<IEnumerable<Book>> GetAllBooksAsync()
         {
-            return await _repository.GetAllBooksAsync();
+            var books = await _repository.GetAllBooksAsync();
+            return books.OrderByDescending(book => book.CreatedAtUtc);
         }
 
         public async Task<Book> FindBookByIdAsync(Guid bookId)
