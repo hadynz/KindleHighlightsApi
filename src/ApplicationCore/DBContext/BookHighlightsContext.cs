@@ -1,5 +1,5 @@
-using ApplicationCore.Models;
 using Microsoft.EntityFrameworkCore;
+using ApplicationCore.Models;
 
 namespace ApplicationCore.DBContext
 {

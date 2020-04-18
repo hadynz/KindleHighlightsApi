@@ -23,10 +23,14 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BookContext>(opt => opt.UseInMemoryDatabase("Books"));
+            services.AddDbContext<BookContext>(opt => opt.UseInMemoryDatabase("BooksContext"));
+            services.AddDbContext<BookHighlightsContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("BookHighlightsContext")));
+
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IBookMapper, BookMapper>();
+
             services.AddControllers();
         }
 
