@@ -9,6 +9,7 @@ namespace ApplicationCore.Repositories
     {
         Task<IEnumerable<Book>> GetAllBooksAsync();
         Task<Book> FindBookByIdAsync(Guid bookId);
+        Task<Book> FindBookByAsinAsync(string asin);
         Task CreateBookAsync(Book book);
         bool BookExists(Guid bookId);
     }

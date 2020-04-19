@@ -27,6 +27,12 @@ namespace ApplicationCore.Repositories
             return await _dbContext.Books.FindAsync(bookId);
         }
 
+        // Find book by Amazon Standard Identification Numbers (ASIN)
+        public async Task<Book> FindBookByAsinAsync(string asin)
+        {
+            return await _dbContext.Books.SingleOrDefaultAsync(b => b.Asin == asin);
+        }
+
         public async Task CreateBookAsync(Book book)
         {
             _dbContext.Books.Add(book);

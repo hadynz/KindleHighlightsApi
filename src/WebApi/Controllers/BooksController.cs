@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationCore.Models;
+using ApplicationCore.Models.Exceptions;
 using ApplicationCore.Services;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Mapper;
@@ -48,11 +49,22 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<BookPostResponseDto>> PostBook(BookPostRequestDto bookPost)
         {
-            var createCommand = _bookMapper.Map(bookPost);
-            var book = await _bookService.CreateBookAsync(createCommand);
-            
-            var response = _bookMapper.MapToBookPostResponse(book);
-            return CreatedAtAction(nameof(GetBook), new { id = book.BookId }, response);
+            try
+            {
+                var createCommand = _bookMapper.Map(bookPost);
+                var book = await _bookService.CreateBookAsync(createCommand);
+
+                var response = _bookMapper.MapToBookPostResponse(book);
+                return CreatedAtAction(nameof(GetBook), new { id = book.BookId }, response);
+            }
+            catch (ConflictEntityException ex)
+            {
+                return Conflict(new
+                {
+                    message = "Book already exists",
+                    bookId = ex.ReferenceId
+                });
+            }
         }
     }
 }

@@ -10,6 +10,5 @@ namespace ApplicationCore.Services
         Task<IEnumerable<Book>> GetAllBooksAsync();
         Task<Book> FindBookByIdAsync(Guid bookId);
         Task<Book> CreateBookAsync(BookCreateCommand createCommand);
-        bool BookExists(Guid bookId);
     }
 }

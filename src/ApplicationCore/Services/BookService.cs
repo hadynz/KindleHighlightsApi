@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApplicationCore.Models;
 using ApplicationCore.Repositories;
+using ApplicationCore.Models.Exceptions;
 
 namespace ApplicationCore.Services
 {
@@ -29,14 +30,16 @@ namespace ApplicationCore.Services
 
         public async Task<Book> CreateBookAsync(BookCreateCommand createCommand)
         {
+            var existingBook = await _repository.FindBookByAsinAsync(createCommand.Asin);
+
+            if (existingBook != null)
+            {
+                throw new ConflictEntityException("Book already exists", existingBook.BookId);
+            }
+
             var book = new Book(createCommand);
             await _repository.CreateBookAsync(book);
             return book;
-        }
-
-        public bool BookExists(Guid bookId)
-        {
-            return _repository.BookExists(bookId);
         }
     }
 }
