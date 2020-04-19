@@ -22,7 +22,7 @@ namespace WebApi.Controllers
             _bookMapper = bookMapper;
         }
 
-        // GET: api/Books
+        // GET: api/books
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookDto>>> GetBooks()
         {
@@ -30,7 +30,7 @@ namespace WebApi.Controllers
             return books.Select(b => _bookMapper.Map(b)).ToList();
         }
 
-        // GET: api/Books/5
+        // GET: api/books/<guid>
         [HttpGet("{id}")]
         public async Task<ActionResult<BookDto>> GetBook(Guid id)
         {
@@ -44,7 +44,7 @@ namespace WebApi.Controllers
             return _bookMapper.Map(book);
         }
 
-        // POST: api/Books
+        // POST: api/books
         [HttpPost]
         public async Task<ActionResult<BookPostResponseDto>> PostBook(BookPostRequestDto bookPost)
         {
@@ -53,11 +53,6 @@ namespace WebApi.Controllers
             
             var response = _bookMapper.MapToBookPostResponse(book);
             return CreatedAtAction("GetBook", new { id = book.BookId }, response);
-        }
-
-        private bool BookExists(Guid id)
-        {
-            return _bookService.BookExists(id);
         }
     }
 }
