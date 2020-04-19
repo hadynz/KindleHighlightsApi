@@ -11,5 +11,6 @@ namespace ApplicationCore.DBContext
         }
 
         public DbSet<Book> Books { get; set; }
+        public DbSet<BookHighlight> BookHighlights { get; set; }
     }
 }

@@ -25,7 +25,6 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BookContext>(opt => opt.UseFileContextDatabase());
-            services.AddDbContext<BookHighlightsContext>(opt => opt.UseFileContextDatabase());
 
             services.AddScoped<IBookHighlightsRepository, BookHighlightsRepository>();
             services.AddScoped<IBookRepository, BookRepository>();

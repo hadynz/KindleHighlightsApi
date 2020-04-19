@@ -10,9 +10,9 @@ namespace ApplicationCore.Repositories
 {
     public class BookHighlightsRepository : IBookHighlightsRepository
     {
-        private readonly BookHighlightsContext _dbContext;
+        private readonly BookContext _dbContext;
 
-        public BookHighlightsRepository(BookHighlightsContext dbContext)
+        public BookHighlightsRepository(BookContext dbContext)
         {
             this._dbContext = dbContext;
         }
