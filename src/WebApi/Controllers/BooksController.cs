@@ -48,11 +48,11 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<BookPostResponseDto>> PostBook(BookPostRequestDto bookPost)
         {
-            var bookCreateCommand = _bookMapper.Map(bookPost);
-            var book = await _bookService.CreateBookAsync(bookCreateCommand);
+            var createCommand = _bookMapper.Map(bookPost);
+            var book = await _bookService.CreateBookAsync(createCommand);
             
             var response = _bookMapper.MapToBookPostResponse(book);
-            return CreatedAtAction("GetBook", new { id = book.BookId }, response);
+            return CreatedAtAction(nameof(GetBook), new { id = book.BookId }, response);
         }
     }
 }
