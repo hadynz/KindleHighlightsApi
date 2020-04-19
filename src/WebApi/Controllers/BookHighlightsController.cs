@@ -2,11 +2,10 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ApplicationCore.DBContext;
 using ApplicationCore.Models;
 using WebApi.Mapper;
 using ApplicationCore.Services;
+using System.Collections.Generic;
 
 namespace WebApi.Controllers
 {
@@ -14,42 +13,53 @@ namespace WebApi.Controllers
     [ApiController]
     public class BookHighlightsController : ControllerBase
     {
-        private readonly BookHighlightsContext _context;
         private readonly IBookService _bookService;
+        private readonly IBookHighlightsService _bookHighlightsService;
         private readonly IBookHighlightsMapper _bookHighlightsMapper;
 
-        public BookHighlightsController(BookHighlightsContext context, IBookService bookService, IBookHighlightsMapper bookHighlightsMapper)
+        public BookHighlightsController(IBookService bookService, IBookHighlightsService bookHighlightsService, IBookHighlightsMapper bookHighlightsMapper)
         {
-            _context = context;
             _bookService = bookService;
+            _bookHighlightsService = bookHighlightsService;
             _bookHighlightsMapper = bookHighlightsMapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<BookHighlightsDto>> GetBookHighlight([FromRoute]Guid bookId)
         {
-            var book = await _bookService.FindBookByIdAsync(bookId);
+            var highlights = await _bookHighlightsService.GetBookHighlights(bookId);
 
-            if (book == null)
+            if (highlights == null)
             {
-                return NotFound();
+                return UnprocessableEntity("Book does not exist");
             }
-
-            var highlights = await _context.BookHighlights.Where(h => h.BookId == bookId).ToListAsync();
 
             return new BookHighlightsDto()
             {
+                BookId = bookId,
                 Highlights = highlights.Select(h => _bookHighlightsMapper.MapToBookPostResponse(h))
             };
         }
 
         [HttpPost]
-        public async Task<ActionResult<BookHighlight>> PostBookHighlight(Guid bookId, BookHighlight bookHighlight)
+        public async Task<ActionResult<BookHighlight>> PostBookHighlight(Guid bookId, IEnumerable<BookHighlightsPostRequestDto> bookHighlights)
         {
-            _context.BookHighlights.Add(bookHighlight);
-            await _context.SaveChangesAsync();
+            var createCommands = _bookHighlightsMapper.Map(bookId, bookHighlights);
 
-            return CreatedAtAction("GetBookHighlight", new { id = bookHighlight.BookHighlightId }, bookHighlight);
+            if (createCommands == null)
+            {
+                return BadRequest("At least one book highlight must be created.");
+            }
+
+            var highlights = await _bookHighlightsService.CreateBookHighlightsAsync(createCommands);
+
+            if (highlights == null)
+            {
+                return UnprocessableEntity("Book does not exist");
+            }
+
+            var response = _bookHighlightsMapper.MapToBookHighlightsPostResponse(bookId);
+            return CreatedAtAction(nameof(GetBookHighlight), new { bookId }, response);
         }
     }
 }

@@ -26,8 +26,10 @@ namespace WebApi
             services.AddDbContext<BookContext>(opt => opt.UseInMemoryDatabase("BooksContext"));
             services.AddDbContext<BookHighlightsContext>(opt => opt.UseInMemoryDatabase("BookHighlightsContext"));
 
+            services.AddScoped<IBookHighlightsRepository, BookHighlightsRepository>();
             services.AddScoped<IBookRepository, BookRepository>();
 
+            services.AddScoped<IBookHighlightsService, BookHighlightsService>();
             services.AddScoped<IBookService, BookService>();
 
             services.AddScoped<IBookMapper, BookMapper>();

@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using ApplicationCore.Models;
 
 namespace WebApi.Mapper
@@ -11,6 +14,31 @@ namespace WebApi.Mapper
                 BookHighlightId = bookHighlight.BookHighlightId,
                 LocationPercentage = bookHighlight.LocationPercentage,
                 Text = bookHighlight.Text
+            };
+        }
+
+        public IEnumerable<BookHighlightCreateCommand> Map(Guid bookId, IEnumerable<BookHighlightsPostRequestDto> bookHighlightDtos)
+        {
+            var highlights = bookHighlightDtos.ToList();
+
+            if (highlights.Count == 0)
+            {
+                return null;
+            }
+
+            return highlights.Select(b => new BookHighlightCreateCommand
+            {
+                BookId = bookId,
+                LocationPercentage = b.LocationPercentage,
+                Text = b.Text
+            });
+        }
+
+        public BookHighlightsPostResponse MapToBookHighlightsPostResponse(Guid bookId)
+        {
+            return new BookHighlightsPostResponse()
+            {
+                BookId = bookId
             };
         }
     }
