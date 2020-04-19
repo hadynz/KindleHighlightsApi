@@ -6,6 +6,7 @@ namespace ApplicationCore.Models
     {
         public Guid BookId { get; private set; }
         public Guid BookHighlightId { get; private set; }
+        public string AnnotationId { get; private set; }
         public string Text { get; private set; }
         public string LocationPercentage { get; private set; }
         public DateTime CreatedAtUtc { get; private set; }
@@ -19,6 +20,7 @@ namespace ApplicationCore.Models
         public BookHighlight(BookHighlightCreateCommand createCommand)
         {
             BookId = createCommand.BookId;
+            AnnotationId = createCommand.AnnotationId;
             Text = createCommand.Text;
             LocationPercentage = createCommand.LocationPercentage;
             

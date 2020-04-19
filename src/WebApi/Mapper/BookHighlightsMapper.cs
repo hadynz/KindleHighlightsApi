@@ -13,7 +13,8 @@ namespace WebApi.Mapper
             {
                 BookHighlightId = bookHighlight.BookHighlightId,
                 LocationPercentage = bookHighlight.LocationPercentage,
-                Text = bookHighlight.Text
+                Text = bookHighlight.Text,
+                AnnotationId = bookHighlight.AnnotationId
             };
         }
 
@@ -29,8 +30,9 @@ namespace WebApi.Mapper
             return highlights.Select(b => new BookHighlightCreateCommand
             {
                 BookId = bookId,
-                LocationPercentage = b.LocationPercentage,
-                Text = b.Text
+                Text = b.Text,
+                AnnotationId = b.AnnotationId,
+                LocationPercentage = b.LocationPercentage
             });
         }
 
