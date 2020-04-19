@@ -1,6 +1,7 @@
 using ApplicationCore.DBContext;
 using ApplicationCore.Repositories;
 using ApplicationCore.Services;
+using FileContextCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -23,8 +24,8 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BookContext>(opt => opt.UseInMemoryDatabase("BooksContext"));
-            services.AddDbContext<BookHighlightsContext>(opt => opt.UseInMemoryDatabase("BookHighlightsContext"));
+            services.AddDbContext<BookContext>(opt => opt.UseFileContextDatabase());
+            services.AddDbContext<BookHighlightsContext>(opt => opt.UseFileContextDatabase());
 
             services.AddScoped<IBookHighlightsRepository, BookHighlightsRepository>();
             services.AddScoped<IBookRepository, BookRepository>();
