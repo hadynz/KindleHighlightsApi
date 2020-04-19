@@ -8,6 +8,6 @@ namespace ApplicationCore.Repositories
     public interface IBookHighlightsRepository
     {
         Task<IEnumerable<BookHighlight>> GetBookHighlights(Guid bookId);
-        Task CreateBookHighlightsAsync(IEnumerable<BookHighlight> bookHighlights);
+        Task CreateBookHighlightsAsync(Guid bookId, IEnumerable<BookHighlight> bookHighlights);
     }
 }

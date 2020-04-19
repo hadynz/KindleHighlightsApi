@@ -22,9 +22,12 @@ namespace ApplicationCore.Repositories
             return await _dbContext.BookHighlights.Where(h => h.BookId == bookId).ToListAsync();
         }
 
-        public async Task CreateBookHighlightsAsync(IEnumerable<BookHighlight> bookHighlights)
+        public async Task CreateBookHighlightsAsync(Guid bookId, IEnumerable<BookHighlight> bookHighlights)
         {
-            _dbContext.BookHighlights.AddRange(bookHighlights);
+            var existingAnnotationIds = _dbContext.BookHighlights.Where(h => h.BookId == bookId).Select(h => h.AnnotationId).ToList();
+            var newHighlights = bookHighlights.Where(b => !existingAnnotationIds.Contains(b.AnnotationId));
+
+            _dbContext.BookHighlights.AddRange(newHighlights);
             await _dbContext.SaveChangesAsync();
         }
     }

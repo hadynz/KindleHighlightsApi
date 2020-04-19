@@ -41,7 +41,7 @@ namespace ApplicationCore.Services
             }
 
             var bookHighlights = createCommands.Select(createCommand => new BookHighlight(createCommand));
-            await _repository.CreateBookHighlightsAsync(bookHighlights);
+            await _repository.CreateBookHighlightsAsync(book.BookId, bookHighlights);
             return bookHighlights;
         }
     }
