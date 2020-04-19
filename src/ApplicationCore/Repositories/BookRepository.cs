@@ -38,10 +38,5 @@ namespace ApplicationCore.Repositories
             _dbContext.Books.Add(book);
             await _dbContext.SaveChangesAsync();
         }
-
-        public bool BookExists(Guid bookId)
-        {
-            return _dbContext.Books.Any(book => book.BookId == bookId);
-        }
     }
 }
