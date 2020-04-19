@@ -24,12 +24,14 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BookContext>(opt => opt.UseInMemoryDatabase("BooksContext"));
-            services.AddDbContext<BookHighlightsContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("BookHighlightsContext")));
+            services.AddDbContext<BookHighlightsContext>(opt => opt.UseInMemoryDatabase("BookHighlightsContext"));
 
             services.AddScoped<IBookRepository, BookRepository>();
+
             services.AddScoped<IBookService, BookService>();
+
             services.AddScoped<IBookMapper, BookMapper>();
+            services.AddScoped<IBookHighlightsMapper, BookHighlightsMapper>();
 
             services.AddControllers();
         }
